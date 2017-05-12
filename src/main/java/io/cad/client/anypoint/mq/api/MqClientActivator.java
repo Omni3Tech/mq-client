@@ -10,7 +10,7 @@ public interface MqClientActivator<T> {
 
     void publishMessages(List<T> payloads) throws AnypointException;
 
-    T getMessage() throws Exception;
+    T getMessage() throws AnypointException;
 
     List<T> getMessages(Integer batchSize, Integer poolingTime, Integer ttl) throws AnypointException;
 
