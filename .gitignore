@@ -1,0 +1,16 @@
+# Java
+target/
+
+# Editors
+*.iml
+.idea/
+
+**/application.yml
+**/node_modules
+**/node/
+**/etc/
+
+# OS Specific
+.DS_Store
+src/main/java/io/cad/Application.java
+src/main/java/io/cad/MyAnypointConfig.java
