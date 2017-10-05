@@ -1,6 +1,6 @@
-package io.cad.client.anypoint.mq.api;
+package io.cdsoft.anypoint.mq.client.api;
 
-import io.cad.client.anypoint.mq.impl.AnypointException;
+import io.cdsoft.anypoint.mq.client.impl.AnypointException;
 
 import java.util.List;
 

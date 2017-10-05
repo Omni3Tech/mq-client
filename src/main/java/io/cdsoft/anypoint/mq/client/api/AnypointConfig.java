@@ -1,4 +1,4 @@
-package io.cad.client.anypoint.mq.api;
+package io.cdsoft.anypoint.mq.client.api;
 
 public interface AnypointConfig {
     String getClientId();

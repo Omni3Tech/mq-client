@@ -1,4 +1,4 @@
-package io.cad.client.anypoint.mq.impl;
+package io.cdsoft.anypoint.mq.client.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

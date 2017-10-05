@@ -12,5 +12,5 @@ target/
 
 # OS Specific
 .DS_Store
-src/main/java/io/cad/Application.java
-src/main/java/io/cad/MyAnypointConfig.java
+src/main/java/io/cdsoft/Application.java
+src/main/java/io/cdsoft/MyAnypointConfig.java

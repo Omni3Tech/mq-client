@@ -1,9 +1,9 @@
-package io.cad.client.anypoint.mq.api;
+package io.cdsoft.anypoint.mq.client.api;
 
-import io.cad.client.anypoint.mq.impl.AuthResponse;
-import io.cad.client.anypoint.mq.impl.MqMessage;
-import io.cad.client.anypoint.mq.impl.MqMessageReference;
-import io.cad.client.anypoint.mq.impl.MqStatusResponse;
+import io.cdsoft.anypoint.mq.client.impl.AuthResponse;
+import io.cdsoft.anypoint.mq.client.impl.MqMessage;
+import io.cdsoft.anypoint.mq.client.impl.MqMessageReference;
+import io.cdsoft.anypoint.mq.client.impl.MqStatusResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -41,7 +41,7 @@ public interface MqClient {
      * @param dstId     Anypoint queue/exchange name
      * @param msgId     Unique message ID
      * @param mqMessage Message to publish
-     * @return
+     * @return Status response message
      */
     @PUT("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/{msgId}")
     Call<MqStatusResponse> putMessage(
@@ -58,7 +58,7 @@ public interface MqClient {
      * @param envId      Anypoint Environment ID
      * @param dstId      Anypoint queue/exchange name
      * @param mqMessages List of messages to publish. Set messageId in header property
-     * @return
+     * @return List of status response message
      */
     @PUT("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages")
     Call<List<MqStatusResponse>> putAllMessages(
@@ -73,7 +73,7 @@ public interface MqClient {
      * @param orgId Anypoint Organization ID
      * @param envId Anypoint Environment ID
      * @param dstId Anypoint queue/exchange name
-     * @return
+     * @return List of messages retrieved
      */
     @GET("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages")
     Call<List<MqMessage>> getMessages(
@@ -83,14 +83,14 @@ public interface MqClient {
             @Path("dstId") String dstId);
 
     /**
-     * @param token     API Authorization token - does not prepend "bearer "
-     * @param orgId     Anypoint Organization ID
-     * @param envId     Anypoint Environment ID
-     * @param dstId     Anypoint queue/exchange name
-     * @param batchSize Batch Size 1-10; default=1; int
-     * @return
-     * @Param poolingTime Pooling Time <= 20000; default=10000; int
-     * @Param lockTtl     Lock TTL <= 86400000; default=120000; int
+     * @param token       API Authorization token - does not prepend "bearer "
+     * @param orgId       Anypoint Organization ID
+     * @param envId       Anypoint Environment ID
+     * @param dstId       Anypoint queue/exchange name
+     * @param batchSize   Batch Size 1-10; default=1; int
+     * @param poolingTime Pooling Time &lt;= 20000; default=10000; int
+     * @param lockTtl     Lock TTL &lt;= 86400000; default=120000; int
+     * @return List of messages retrieved
      */
     @GET("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages")
     Call<List<MqMessage>> getMessages(
@@ -107,8 +107,8 @@ public interface MqClient {
      * @param orgId               Anypoint Organization ID
      * @param envId               Anypoint Environment ID
      * @param dstId               Anypoint queue/exchange name
-     * @param mqMessageReferences
-     * @return
+     * @param mqMessageReferences List of messages to delete
+     * @return Status response message
      */
     @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages")
     Call<List<MqStatusResponse>> deleteMessages(
@@ -125,7 +125,7 @@ public interface MqClient {
      * @param dstId              Anypoint queue/exchange name
      * @param msgId              Unique message ID
      * @param mqMessageReference Message to delete
-     * @return
+     * @return Status response message
      */
     @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/{msgId}")
     Call<MqStatusResponse> deleteMessage(
@@ -144,7 +144,7 @@ public interface MqClient {
      * @param msgId              Unique message ID
      * @param lckId              Unique lock ID
      * @param mqMessageReference Message lock to delete
-     * @return
+     * @return Status response message
      */
     @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/{msgId}/locks/{lckId}")
     Call<MqStatusResponse> deleteLock(
@@ -161,8 +161,8 @@ public interface MqClient {
      * @param orgId               Anypoint Organization ID
      * @param envId               Anypoint Environment ID
      * @param dstId               Anypoint queue/exchange name
-     * @param mqMessageReferences
-     * @return
+     * @param mqMessageReferences List of messages to remove locks from
+     * @return List of messages
      */
     @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/locks")
     Call<List<MqMessage>> deleteLocks(

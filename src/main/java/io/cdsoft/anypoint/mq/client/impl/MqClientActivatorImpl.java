@@ -1,10 +1,10 @@
-package io.cad.client.anypoint.mq.impl;
+package io.cdsoft.anypoint.mq.client.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.cad.client.anypoint.mq.api.AnypointConfig;
-import io.cad.client.anypoint.mq.api.MqClient;
-import io.cad.client.anypoint.mq.api.MqClientActivator;
+import io.cdsoft.anypoint.mq.client.api.MqClientActivator;
+import io.cdsoft.anypoint.mq.client.api.AnypointConfig;
+import io.cdsoft.anypoint.mq.client.api.MqClient;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;

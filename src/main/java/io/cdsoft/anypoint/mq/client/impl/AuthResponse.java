@@ -1,4 +1,4 @@
-package io.cad.client.anypoint.mq.impl;
+package io.cdsoft.anypoint.mq.client.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
