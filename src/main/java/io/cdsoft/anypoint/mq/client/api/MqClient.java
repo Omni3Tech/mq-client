@@ -6,10 +6,10 @@ import io.cdsoft.anypoint.mq.client.impl.MqMessageReference;
 import io.cdsoft.anypoint.mq.client.impl.MqStatusResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -110,7 +110,7 @@ public interface MqClient {
      * @param mqMessageReferences List of messages to delete
      * @return Status response message
      */
-    @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages")
+    @HTTP(method = "DELETE", path = "api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages", hasBody = true)
     Call<List<MqStatusResponse>> deleteMessages(
             @Header("Authorization") String token,
             @Path("orgId") String orgId,
@@ -127,7 +127,7 @@ public interface MqClient {
      * @param mqMessageReference Message to delete
      * @return Status response message
      */
-    @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/{msgId}")
+    @HTTP(method = "DELETE", path = "api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/{msgId}", hasBody = true)
     Call<MqStatusResponse> deleteMessage(
             @Header("Authorization") String token,
             @Path("orgId") String orgId,
@@ -146,7 +146,7 @@ public interface MqClient {
      * @param mqMessageReference Message lock to delete
      * @return Status response message
      */
-    @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/{msgId}/locks/{lckId}")
+    @HTTP(method = "DELETE", path = "api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/{msgId}/locks/{lckId}", hasBody = true)
     Call<MqStatusResponse> deleteLock(
             @Header("Authorization") String token,
             @Path("orgId") String orgId,
@@ -164,7 +164,7 @@ public interface MqClient {
      * @param mqMessageReferences List of messages to remove locks from
      * @return List of messages
      */
-    @DELETE("api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/locks")
+    @HTTP(method = "DELETE", path = "api/v1/organizations/{orgId}/environments/{envId}/destinations/{dstId}/messages/locks", hasBody = true)
     Call<List<MqMessage>> deleteLocks(
             @Header("Authorization") String token,
             @Path("orgId") String orgId,

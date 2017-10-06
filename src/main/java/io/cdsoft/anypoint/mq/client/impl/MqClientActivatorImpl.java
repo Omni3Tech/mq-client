@@ -2,9 +2,9 @@ package io.cdsoft.anypoint.mq.client.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.cdsoft.anypoint.mq.client.api.MqClientActivator;
 import io.cdsoft.anypoint.mq.client.api.AnypointConfig;
 import io.cdsoft.anypoint.mq.client.api.MqClient;
+import io.cdsoft.anypoint.mq.client.api.MqClientActivator;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -152,7 +152,7 @@ public class MqClientActivatorImpl<T> implements MqClientActivator<T> {
             if (getMessagesResponse.isSuccessful()) {
                 for (MqMessage mqMessage : getMessagesResponse.body()) {
                     String jsonBody = mqMessage.getBody();
-                    String jsonClass = mqMessage.getProperties().get("className");
+                    String jsonClass = mqMessage.getProperties().getOrDefault("className", "java.lang.String");
                     T message = (T) objectMapper.readValue(jsonBody, Class.forName(jsonClass));
                     messages.add(message);
                 }
