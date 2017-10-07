@@ -64,7 +64,6 @@ public interface AnypointConfig {
 
     /**
      * Get the Number of seconds to wait for HTTP reads
-     *
      * NOTE: This value should be longer than the poolingTime parameter on getMessage()
      *
      * @return Number of seconds
@@ -79,6 +78,6 @@ public interface AnypointConfig {
      * @return Number of seconds
      */
     default Long getWriteTimeoutSeconds() {
-        return 60L;
+        return 10L;
     }
 }

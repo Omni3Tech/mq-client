@@ -8,10 +8,10 @@ import lombok.Data;
  * JSON payload
  * <p>
  * {
- * "access_token": "0a61735b-c27f-465d-86f6-5e5a16aaa046",
+ * "access_token": [UUID],
  * "simple_client": {
- * "envId": "495f052a-ab5d-4d1d-b4e0-2abcb8894ac9",
- * "orgId": "61f57b73-76ea-4550-b28f-01395ce72da0"
+ * "envId": [UUID],
+ * "orgId": [UUID]
  * },
  * "token_type": "bearer"
  * }
