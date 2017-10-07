@@ -17,21 +17,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class MqClientActivatorImpl<T> implements MqClientActivator<T> {
 
     private static final String APPLICATION_JSON_UTF8_VALUE = "application/json; charset=utf-8";
 
-    private MqClient mqClient;
-    private ObjectMapper objectMapper;
-    private AnypointConfig anypointProperties;
+    private final MqClient mqClient;
+    private final ObjectMapper objectMapper;
+    private final AnypointConfig anypointProperties;
+    private final Class<T> type;
 
-    public MqClientActivatorImpl(AnypointConfig anypointProperties, ObjectMapper objectMapper) {
+    public MqClientActivatorImpl(AnypointConfig anypointProperties, ObjectMapper objectMapper, Class<T> type) {
+        this.type = type;
+
         // Set up logging interceptor
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.valueOf(anypointProperties.getLoggingLevel()));
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .connectTimeout(anypointProperties.getConnectTimeoutSeconds(), TimeUnit.SECONDS)
+                .readTimeout(anypointProperties.getReadTimeoutSeconds(), TimeUnit.SECONDS)
+                .writeTimeout(anypointProperties.getWriteTimeoutSeconds(), TimeUnit.SECONDS)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(anypointProperties.getServerUri())
@@ -50,6 +59,7 @@ public class MqClientActivatorImpl<T> implements MqClientActivator<T> {
         try {
             message = new MqMessage(new HashMap<>(), new HashMap<>(), objectMapper.writeValueAsString(payload));
             message.getHeaders().put("contentType", APPLICATION_JSON_UTF8_VALUE);
+            message.getProperties().put("className", payload.getClass().getName());
         } catch (JsonProcessingException e) {
             throw new AnypointException("Failed to serialize payload.", e);
         }
@@ -149,12 +159,9 @@ public class MqClientActivatorImpl<T> implements MqClientActivator<T> {
 
         List<T> messages = new ArrayList<>();
         try {
-            if (getMessagesResponse.isSuccessful()) {
+            if (getMessagesResponse.isSuccessful() && getMessagesResponse.body() != null) {
                 for (MqMessage mqMessage : getMessagesResponse.body()) {
-                    String jsonBody = mqMessage.getBody();
-                    String jsonClass = mqMessage.getProperties().getOrDefault("className", "java.lang.String");
-                    T message = (T) objectMapper.readValue(jsonBody, Class.forName(jsonClass));
-                    messages.add(message);
+                    messages.add(objectMapper.readValue(mqMessage.getBody(), type));
                 }
             }
         } catch (Throwable t) {

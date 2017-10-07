@@ -1,11 +1,12 @@
 package io.cdsoft.anypoint.mq.client.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
  * JSON payload
- *
+ * <p>
  * {
  * "access_token": "0a61735b-c27f-465d-86f6-5e5a16aaa046",
  * "simple_client": {
@@ -27,7 +28,8 @@ public class AuthResponse {
     private String tokenType;
 
     @Data
-    public class Client {
+    @AllArgsConstructor
+    public static class Client {
         private String envId;
         private String orgId;
     }
